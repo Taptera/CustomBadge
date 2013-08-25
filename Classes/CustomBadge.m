@@ -39,6 +39,33 @@
 @synthesize badgeScaleFactor;
 @synthesize badgeShining;
 
++ (CGFloat)sizeOfFontForString:(NSString *)string withScale:(CGFloat)scale
+{
+    CGFloat sizeOfFont = 13.5*scale;
+    if (string.length<2) {
+        sizeOfFont += sizeOfFont*0.20;
+    }
+    return sizeOfFont;
+}
+
+- (id) initWithAttributedString:(NSAttributedString *)badgeAttributedString withScale:(CGFloat)scale withShining:(BOOL)shining
+{
+	self = [super initWithFrame:CGRectMake(0, 0, 25, 25)];
+	if(self!=nil) {
+		self.contentScaleFactor = [[UIScreen mainScreen] scale];
+		self.backgroundColor = [UIColor clearColor];
+		self.badgeText = badgeAttributedString;
+		self.badgeFrame = YES;
+		self.badgeFrameColor = [UIColor whiteColor];
+		self.badgeInsetColor = [UIColor redColor];
+		self.badgeCornerRoundness = 0.4;
+		self.badgeScaleFactor = scale;
+		self.badgeShining = shining;
+		[self autoBadgeSizeWithString:badgeAttributedString.string];
+	}
+	return self;
+}
+
 // I recommend to use the allocator customBadgeWithString
 - (id) initWithString:(NSString *)badgeString withScale:(CGFloat)scale withShining:(BOOL)shining
 {
@@ -46,8 +73,9 @@
 	if(self!=nil) {
 		self.contentScaleFactor = [[UIScreen mainScreen] scale];
 		self.backgroundColor = [UIColor clearColor];
-		self.badgeText = badgeString;
-		self.badgeTextColor = [UIColor whiteColor];
+        CGFloat sizeOfFont = [CustomBadge sizeOfFontForString:badgeString withScale:scale];
+		self.badgeText = [[NSAttributedString alloc] initWithString:badgeString attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:sizeOfFont],
+                                                                                  NSForegroundColorAttributeName: [UIColor whiteColor]}];
 		self.badgeFrame = YES;
 		self.badgeFrameColor = [UIColor whiteColor];
 		self.badgeInsetColor = [UIColor redColor];
@@ -66,7 +94,9 @@
 	if(self!=nil) {
 		self.contentScaleFactor = [[UIScreen mainScreen] scale];
 		self.backgroundColor = [UIColor clearColor];
-		self.badgeText = badgeString;
+        CGFloat sizeOfFont = [CustomBadge sizeOfFontForString:badgeString withScale:scale];
+		self.badgeText = [[NSAttributedString alloc] initWithString:badgeString attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:sizeOfFont],
+                                                                                  NSForegroundColorAttributeName: stringColor}];
 		self.badgeTextColor = stringColor;
 		self.badgeFrame = badgeFrameYesNo;
 		self.badgeFrameColor = frameColor;
@@ -95,10 +125,16 @@
 		retValue = CGSizeMake(25*badgeScaleFactor, 25*badgeScaleFactor);
 	}
 	self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, retValue.width, retValue.height);
-	self.badgeText = badgeString;
+//    NSRange range = NSMakeRange(0, badgeString.length);
+//    self.badgeText = [[NSAttributedString alloc] initWithString:badgeString attributes:[badgeText attributesAtIndex:0 effectiveRange:&range]];
 	[self setNeedsDisplay];
 }
 
+
++ (CustomBadge*) customBadgeWithAttributedString:(NSAttributedString *)badgeAttributedString
+{
+    return [[self alloc] initWithAttributedString:badgeAttributedString withScale:1.0 withShining:YES];
+}
 
 // Creates a Badge with a given Text 
 + (CustomBadge*) customBadgeWithString:(NSString *)badgeString
@@ -226,14 +262,8 @@
 	}
 	
 	if ([self.badgeText length]>0) {
-		[badgeTextColor set];
-		CGFloat sizeOfFont = 13.5*badgeScaleFactor;
-		if ([self.badgeText length]<2) {
-			sizeOfFont += sizeOfFont*0.20;
-		}
-		UIFont *textFont = [UIFont boldSystemFontOfSize:sizeOfFont];
-		CGSize textSize = [self.badgeText sizeWithFont:textFont];
-		[self.badgeText drawAtPoint:CGPointMake((rect.size.width/2-textSize.width/2), (rect.size.height/2-textSize.height/2)) withFont:textFont];
+		CGSize textSize = self.badgeText.size;
+		[self.badgeText drawAtPoint:CGPointMake((rect.size.width/2-textSize.width/2), (rect.size.height/2-textSize.height/2))];
 	}
 	
 }

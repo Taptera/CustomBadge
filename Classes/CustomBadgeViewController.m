@@ -72,6 +72,11 @@
 														 withScale:1.25 
 													   withShining:YES];
 	
+    NSString *string = @"10 | 20";
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:[CustomBadge sizeOfFontForString:string withScale:1]], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(0, 2)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(5, 2)];
+    CustomBadge *customBadge8 = [CustomBadge customBadgeWithAttributedString:attributedString];
 	
 	// Set Position of Badge 1
 	[customBadge1 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge1.frame.size.width/2+customBadge2.frame.size.width/2, 110, customBadge1.frame.size.width, customBadge1.frame.size.height)];
@@ -81,6 +86,7 @@
 	[customBadge5 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge5.frame.size.width/2, 235, customBadge5.frame.size.width, customBadge5.frame.size.height)];
 	[customBadge6 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge6.frame.size.width/2, 260, customBadge6.frame.size.width, customBadge6.frame.size.height)];
 	[customBadge7 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge7.frame.size.width/2, 310, customBadge7.frame.size.width, customBadge7.frame.size.height)];
+	[customBadge8 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge8.frame.size.width/2+customBadge3.frame.size.width/2, 140, customBadge8.frame.size.width, customBadge8.frame.size.height)];
 	 
 	 
 	// Add Badges to View
@@ -91,6 +97,7 @@
 	[self.view addSubview:customBadge5];
 	[self.view addSubview:customBadge6];
 	[self.view addSubview:customBadge7];
+	[self.view addSubview:customBadge8];
 
 	// Change text afterwards
 	//[customBadge1 autoBadgeSizeWithString:@"New Text!"];
