@@ -15,7 +15,7 @@
 	// Create simple Badge
 	//CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"2"];
 	CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"2" 
-												   withStringColor:[UIColor whiteColor] 
+												   withStringColor:[UIColor grayColor]
 													withInsetColor:[UIColor redColor] 
 													withBadgeFrame:YES 
 											   withBadgeFrameColor:[UIColor whiteColor] 
@@ -96,8 +96,8 @@
 	[self.view addSubview:customBadge8];
 
 	// Change text afterwards
-//	[customBadge1 autoBadgeSizeWithAttributedString:[[NSAttributedString alloc] initWithString:@"New Text!"]];
-	
+//	[customBadge1 autoBadgeSizeWithString:@"New Text!"];
+//	[customBadge8 autoBadgeSizeWithNumber1:@10 andNumber2:@20];
 	
 	
 	// Convert Badge (based on UIView) to an UIImageView

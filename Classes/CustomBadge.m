@@ -110,7 +110,15 @@
 }
 
 
-// Use this method if you want to change the badge text after the first rendering 
+// Use this method if you want to change the badge text after the first rendering
+- (void) autoBadgeSizeWithString:(NSString *)badgeString
+{
+    CGFloat sizeOfFont = [CustomBadge sizeOfFontForString:badgeString withScale:badgeScaleFactor];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:badgeString attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:sizeOfFont],
+                                                                                                    NSForegroundColorAttributeName: badgeTextColor}];
+    [self autoBadgeSizeWithAttributedString:attributedString];
+}
+
 - (void) autoBadgeSizeWithAttributedString:(NSAttributedString *)badgeAttributedString
 {
 	CGSize retValue;
@@ -128,6 +136,15 @@
     self.badgeText = badgeAttributedString;
     self.hidden = !badgeText.length;
 	[self setNeedsDisplay];
+}
+
+- (void) autoBadgeSizeWithNumber1:(NSNumber *)number1 andNumber2:(NSNumber *)number2
+{
+    NSString *string = number1 ? (number2 ? [NSString stringWithFormat:@"%@ | %@", number1, number2] : number1.stringValue) : (number2 ? number2.stringValue: @"");
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:[CustomBadge sizeOfFontForString:string withScale:1]], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:self.badgeNumber1Color range:NSMakeRange(0, number1.stringValue.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:self.badgeNumber2Color range:NSMakeRange(number1 ? number1.stringValue.length + 3 : 0, number2.stringValue.length)];
+    [self autoBadgeSizeWithAttributedString:attributedString];
 }
 
 
@@ -156,7 +173,10 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:[CustomBadge sizeOfFontForString:string withScale:1]], NSForegroundColorAttributeName: [UIColor whiteColor]}];
     [attributedString addAttribute:NSForegroundColorAttributeName value:color1 range:NSMakeRange(0, number1.stringValue.length)];
     [attributedString addAttribute:NSForegroundColorAttributeName value:color2 range:NSMakeRange(number1 ? number1.stringValue.length + 3 : 0, number2.stringValue.length)];
-    return [[CustomBadge alloc] initWithAttributedString:attributedString.copy withScale:1 withShining:YES];
+    CustomBadge *customBadge = [[CustomBadge alloc] initWithAttributedString:attributedString.copy withScale:1 withShining:YES];
+    customBadge.badgeNumber1Color = color1;
+    customBadge.badgeNumber2Color = color2;
+    return customBadge;
 }
  
 

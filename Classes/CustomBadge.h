@@ -41,6 +41,9 @@
 @property(nonatomic,strong) UIColor *badgeInsetColor;
 @property(nonatomic,strong) UIColor *badgeFrameColor;
 
+@property(nonatomic,strong) UIColor *badgeNumber1Color;
+@property(nonatomic,strong) UIColor *badgeNumber2Color;
+
 @property(nonatomic,readwrite) BOOL badgeFrame;
 @property(nonatomic,readwrite) BOOL badgeShining;
 
@@ -48,10 +51,15 @@
 @property(nonatomic,readwrite) CGFloat badgeScaleFactor;
 
 + (CGFloat)sizeOfFontForString:(NSString *)string withScale:(CGFloat)scale;
+
 + (CustomBadge*) customBadgeWithAttributedString:(NSAttributedString *)badgeAttributedString;
+- (void) autoBadgeSizeWithAttributedString:(NSAttributedString *)badgeAttributedString;
+
 + (CustomBadge*) customBadgeWithString:(NSString *)badgeString;
 + (CustomBadge*) customBadgeWithString:(NSString *)badgeString withStringColor:(UIColor*)stringColor withInsetColor:(UIColor*)insetColor withBadgeFrame:(BOOL)badgeFrameYesNo withBadgeFrameColor:(UIColor*)frameColor withScale:(CGFloat)scale withShining:(BOOL)shining;
+- (void) autoBadgeSizeWithString:(NSString *)badgeString;
+
 + (CustomBadge*) customBadgeWithNumber1:(NSNumber *)number1 number1Color:(UIColor*)color1 andNumber2:(NSNumber *)number2 number2Color:(UIColor*)color2;
-- (void) autoBadgeSizeWithAttributedString:(NSAttributedString *)badgeAttributedString;
+- (void) autoBadgeSizeWithNumber1:(NSNumber *)number1 andNumber2:(NSNumber *)number2;
 
 @end
