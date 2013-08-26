@@ -73,9 +73,10 @@
 	if(self!=nil) {
 		self.contentScaleFactor = [[UIScreen mainScreen] scale];
 		self.backgroundColor = [UIColor clearColor];
+        self.badgeTextColor = [UIColor whiteColor];
         CGFloat sizeOfFont = [CustomBadge sizeOfFontForString:badgeString withScale:scale];
 		self.badgeText = [[NSAttributedString alloc] initWithString:badgeString attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:sizeOfFont],
-                                                                                  NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                                                                                  NSForegroundColorAttributeName: badgeTextColor}];
 		self.badgeFrame = YES;
 		self.badgeFrameColor = [UIColor whiteColor];
 		self.badgeInsetColor = [UIColor redColor];
