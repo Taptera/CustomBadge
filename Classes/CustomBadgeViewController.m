@@ -72,11 +72,7 @@
 														 withScale:1.25 
 													   withShining:YES];
 	
-    NSString *string = @"10 | 20";
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:[CustomBadge sizeOfFontForString:string withScale:1]], NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(0, 2)];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(5, 2)];
-    CustomBadge *customBadge8 = [CustomBadge customBadgeWithAttributedString:attributedString];
+    CustomBadge *customBadge8 = [CustomBadge customBadgeWithNumber1:@1 number1Color:[UIColor yellowColor] andNumber2:@2 number2Color:[UIColor greenColor]];
 	
 	// Set Position of Badge 1
 	[customBadge1 setFrame:CGRectMake(self.view.frame.size.width/2-customBadge1.frame.size.width/2+customBadge2.frame.size.width/2, 110, customBadge1.frame.size.width, customBadge1.frame.size.height)];
@@ -100,7 +96,7 @@
 	[self.view addSubview:customBadge8];
 
 	// Change text afterwards
-	//[customBadge1 autoBadgeSizeWithString:@"New Text!"];
+//	[customBadge1 autoBadgeSizeWithAttributedString:[[NSAttributedString alloc] initWithString:@"New Text!"]];
 	
 	
 	

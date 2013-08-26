@@ -61,7 +61,7 @@
 		self.badgeCornerRoundness = 0.4;
 		self.badgeScaleFactor = scale;
 		self.badgeShining = shining;
-		[self autoBadgeSizeWithString:badgeAttributedString.string];
+		[self autoBadgeSizeWithAttributedString:badgeAttributedString];
 	}
 	return self;
 }
@@ -82,7 +82,7 @@
 		self.badgeCornerRoundness = 0.4;
 		self.badgeScaleFactor = scale;
 		self.badgeShining = shining;
-		[self autoBadgeSizeWithString:badgeString];		
+		[self autoBadgeSizeWithAttributedString:badgeText];
 	}
 	return self;
 }
@@ -104,29 +104,29 @@
 		self.badgeCornerRoundness = 0.40;	
 		self.badgeScaleFactor = scale;
 		self.badgeShining = shining;
-		[self autoBadgeSizeWithString:badgeString];
+		[self autoBadgeSizeWithAttributedString:badgeText];
 	}
 	return self;
 }
 
 
 // Use this method if you want to change the badge text after the first rendering 
-- (void) autoBadgeSizeWithString:(NSString *)badgeString
+- (void) autoBadgeSizeWithAttributedString:(NSAttributedString *)badgeAttributedString
 {
 	CGSize retValue;
 	CGFloat rectWidth, rectHeight;
-	CGSize stringSize = [badgeString sizeWithFont:[UIFont boldSystemFontOfSize:12]];
+	CGSize stringSize = [badgeAttributedString.string sizeWithFont:[UIFont boldSystemFontOfSize:12]];
 	CGFloat flexSpace;
-	if ([badgeString length]>=2) {
-		flexSpace = [badgeString length];
+	if ([badgeAttributedString.string length]>=2) {
+		flexSpace = [badgeAttributedString.string length];
 		rectWidth = 25 + (stringSize.width + flexSpace); rectHeight = 25;
 		retValue = CGSizeMake(rectWidth*badgeScaleFactor, rectHeight*badgeScaleFactor);
 	} else {
 		retValue = CGSizeMake(25*badgeScaleFactor, 25*badgeScaleFactor);
 	}
 	self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, retValue.width, retValue.height);
-//    NSRange range = NSMakeRange(0, badgeString.length);
-//    self.badgeText = [[NSAttributedString alloc] initWithString:badgeString attributes:[badgeText attributesAtIndex:0 effectiveRange:&range]];
+    self.badgeText = badgeAttributedString;
+    self.hidden = !badgeText.length;
 	[self setNeedsDisplay];
 }
 
@@ -150,7 +150,14 @@
 }
 
 
-
++ (CustomBadge*) customBadgeWithNumber1:(NSNumber *)number1 number1Color:(UIColor *)color1 andNumber2:(NSNumber *)number2 number2Color:(UIColor *)color2
+{
+    NSString *string = number1 ? (number2 ? [NSString stringWithFormat:@"%@ | %@", number1, number2] : number1.stringValue) : (number2 ? number2.stringValue: @"");
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:[CustomBadge sizeOfFontForString:string withScale:1]], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color1 range:NSMakeRange(0, number1.stringValue.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color2 range:NSMakeRange(number1 ? number1.stringValue.length + 3 : 0, number2.stringValue.length)];
+    return [[CustomBadge alloc] initWithAttributedString:attributedString.copy withScale:1 withShining:YES];
+}
  
 
 // Draws the Badge with Quartz
