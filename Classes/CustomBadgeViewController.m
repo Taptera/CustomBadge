@@ -15,7 +15,7 @@
 	// Create simple Badge
 	//CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"2"];
 	CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"2" 
-												   withStringColor:[UIColor whiteColor]
+												   withStringColor:[UIColor grayColor]
 													withInsetColor:[UIColor redColor] 
 													withBadgeFrame:YES 
 											   withBadgeFrameColor:[UIColor whiteColor] 

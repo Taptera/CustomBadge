@@ -135,7 +135,7 @@
 	}
 	self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, retValue.width, retValue.height);
     self.badgeText = badgeAttributedString;
-    self.hidden = !badgeText.length || [badgeText.string isEqualToString:@"0"];
+    self.hidden = !badgeText.length;
 	[self setNeedsDisplay];
 }
 
