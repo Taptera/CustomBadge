@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary  = 'Draws a typical iOS badge indicator with a custom text on any view.'
   s.homepage = 'https://github.com/Taptera/CustomBadge.git'
   s.author   = { 'Sascha Paulus' => 'open@spaulus.com' }
-  s.source   = { :git => 'https://github.com/Taptera/CustomBadge.git', :tag => 'v#{s.version}' }
+  s.source   = { :git => 'https://github.com/Taptera/CustomBadge.git', :tag => "v#{s.version}" }
   s.platform = :ios
 
   s.source_files = 'Classes/CustomBadge.{h,m}'
